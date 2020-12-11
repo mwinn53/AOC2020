@@ -5,11 +5,10 @@ Parse a line and find occurrences of a character in each string
 arguments: input file name
 
 """
-
-
 from argparse import ArgumentParser as ArgParser
+import progressbar
 
-description = ('Command line interface for enriching list of IP Addresses.')
+description = ('Advent of Code Day 2 problem.')
 parser = ArgParser(description=description)
 try:
   parser.add_argument = parser.add_option
@@ -22,12 +21,19 @@ args = parser.parse_args()
 with open(args.ifname, 'r') as f:
     lines = f.read().split('\n')
 
+
+bar = progressbar.ProgressBar(maxval=len(lines), widgets=['Working... ', progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
+bar.start()
+i = 0
 count = 0
 for line in lines:
     line = line.split()
     r = list(map(int, line[0].split('-')))
     if line[2].count(line[1].replace(':','')) in range(r[0],r[1]+1):
         count+=1
+    i+=1
+    bar.update(i)
+bar.finish()
 print('There are {} passwords in compliance with part 1.'.format(count))
 
 count = 0

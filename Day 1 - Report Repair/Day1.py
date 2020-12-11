@@ -7,8 +7,9 @@ function: findb
 
 """
 from argparse import ArgumentParser as ArgParser
+import progressbar
 
-description = ('Command line interface for enriching list of IP Addresses.')
+description = ('Advent of Code Day 1 problem.')
 parser = ArgParser(description=description)
 try:
   parser.add_argument = parser.add_option
@@ -43,9 +44,15 @@ print('The first solution is: {} + {} = {}'.format(a, b, a+b))
 print('The first solution is: {} * {} = {}'.format(a, b, a*b))
 print('---------------------------------------')
 
+bar = progressbar.ProgressBar(maxval=len(lines), widgets=['Working... ', progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
+bar.start()
+i = 0
 for line in lines:
     a, b = findb(year-line, lines)
     if (a + b > 0):
         print('The second solution is: {} + {} + {} = {}'.format(a, b, line, a + b + line))
         print('The second solution is: {} * {} * {} = {}'.format(a, b, line, a * b * line))
         break
+    i+=1
+    bar.update(i)
+bar.finish()

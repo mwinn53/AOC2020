@@ -6,9 +6,7 @@ arguments: input file name
 
 """
 from argparse import ArgumentParser as ArgParser
-import progressbar
 import os.path
-import re
 
 description = ('Advent of Code Day 5 problem.')
 parser = ArgParser(description=description)
